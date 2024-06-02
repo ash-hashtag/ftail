@@ -1,0 +1,10 @@
+PATH=/home/ash/google-cloud-sdk/bin:/home/ash/.nvm/versions/node/v18.17.0/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/opt/cuda/bin:/opt/cuda/nsight_compute:/opt/cuda/nsight_systems/bin:/var/lib/flatpak/exports/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl:/usr/lib/rustup/bin:/home/ash/Development/flutter/bin:/usr/lib/rustup/bin:/home/ash/.yarn/bin:/usr/share/scripts:/home/ash/.cargo/bin:/home/ash/.pub-cache/bin:/usr/lib/jvm/java-22-openjdk/bin:/home/ash/go/bin:/opt/gradle/gradle-8.6/bin:/home/ash/.local/share/solana/install/active_release/bin:/home/ash/Development/flutter/bin:/usr/lib/rustup/bin:/home/ash/.yarn/bin:/usr/share/scripts:/home/ash/.cargo/bin:/home/ash/.pub-cache/bin:/usr/lib/jvm/java-22-openjdk/bin:/home/ash/go/bin:/opt/gradle/gradle-8.6/bin:/home/ash/.local/share/solana/install/active_release/bin
+MAIL=/var/mail/root
+LOGNAME=root
+USER=root
+HOME=/root
+SHELL=/bin/bash
+SUDO_COMMAND=./zig-out/bin/ftail hello printenv
+SUDO_USER=ash
+SUDO_UID=1000
+SUDO_GID=1000
