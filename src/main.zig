@@ -121,8 +121,6 @@ const StdOutEnum = enum(u8) {
 };
 
 fn tailLines2(allocator: std.mem.Allocator, reader: anytype, output_file_path: ?[]const u8, number_of_lines: usize, stdout_enum: u8) !void {
-    // const stdout_enum: u8 = 0;
-    const clear_sequence = "\x1b[2J\x1b[H";
     var lines = try std.ArrayList([]u8).initCapacity(allocator, number_of_lines);
     defer {
         for (lines.items) |line| {
@@ -140,23 +138,38 @@ fn tailLines2(allocator: std.mem.Allocator, reader: anytype, output_file_path: ?
 
     var file_out = std.ArrayList(u8).init(allocator);
     defer file_out.deinit();
+    var new_lines_printed: usize = 0; // :/ couldn't get it to work more cleanly
+    var bwriter = std.io.bufferedWriter(std.io.getStdOut().writer());
+    var writer = bwriter.writer();
     while (try reader.readUntilDelimiterOrEofAlloc(allocator, '\n', 4096)) |line| {
+        // std.time.sleep(std.time.ns_per_s * 1);
         if (number_of_lines <= lines.items.len) {
             allocator.free(shiftElementsUp(&lines));
         }
+
+        if ((stdout_enum & (@intFromEnum(StdOutEnum.StdOut) | @intFromEnum(StdOutEnum.ClearConsole))) != 0) {
+            while (new_lines_printed > 0) {
+                try writer.print("\x1b[F\x1b[2K\x1b[0G", .{}); // move up clear line move to start of the line
+                new_lines_printed -= 1;
+            }
+        }
+
         try lines.append(line);
         for (lines.items) |nline| {
             try file_out.appendSlice(nline);
             try file_out.append('\n');
+            new_lines_printed += 1;
         }
         const out = file_out.items.ptr[0..file_out.items.len];
         if ((stdout_enum & @intFromEnum(StdOutEnum.StdOut)) != 0) {
-            var writer = std.io.getStdOut().writer();
+            // var bwriter = std.io.bufferedWriter(std.io.getStdOut().writer());
+            // var writer = bwriter.writer();
             if ((stdout_enum & @intFromEnum(StdOutEnum.ClearConsole)) != 0) {
-                try writer.print("{s}{s}", .{ clear_sequence, out });
+                try writer.print("{s}", .{out});
             } else {
                 try writer.print("{s}\n", .{line});
             }
+            try bwriter.flush();
         }
         if (f != null) {
             const f0 = f.?;
