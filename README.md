@@ -16,6 +16,8 @@ Options
  
  o         output to stdout
 
+ f         write to file
+
  h         print help
 ```
 
