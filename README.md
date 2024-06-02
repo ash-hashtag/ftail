@@ -1,6 +1,6 @@
 # ftail
 
-Tail long running processes into a file, because tail waits for the executable to finish to output, made this
+Tail long running processes into a file, because the usual tail command waits for the executable to finish to output, ftail doesn't
 
 ```
 ftail -[OPTION(s)] [OUTPUT_FILE] [SUBPROCESS args]
@@ -23,17 +23,17 @@ Example Usage
 If you have a not so important program, but would like to keep track of its last stdout log outputs
 
 ```
-my_not_so_important_exe options | ftail -no 30 /tmp/my_not_so_important_exe.log
+my_not_so_important_exe options | ftail -nof 30 /tmp/my_not_so_important_exe.log
 ```
 will output all lines to stdout but writes the recent 30 lines to the file
 
 ```
-my_not_so_important_exe options | ftail -noc 30 /tmp/my_not_so_important_exe.log
+my_not_so_important_exe options | ftail -nocf 30 /tmp/my_not_so_important_exe.log
 ```
 will clear the console and output the last 30 lines to stdout and writes them to the file
 ```
-ftail -no 30 /tmp/my_not_so_important_exe.log my_not_so_important_exe options
-ftail -nco 30 /tmp/my_not_so_important_exe.log my_not_so_important_exe options
+ftail -nfo 30 /tmp/my_not_so_important_exe.log my_not_so_important_exe options
+ftail -nfco 30 /tmp/my_not_so_important_exe.log my_not_so_important_exe options
 ```
 same thing, this syntax is more useful for when running with sudo or non shell environments
 
